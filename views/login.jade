@@ -1,0 +1,40 @@
+extends layout
+
+script(type="text/javascript").
+    function check() {
+        var pwd = $('#inputPassword').val();
+        if (!pwd) {
+            alert('请输入密码');
+            return false;
+        }
+        var userID = $('#inputEmail').val();
+        if (!userID) {
+            alert('请输入邮箱');
+            return false;
+        }
+        $('#fr').val(getQueryString('fr'));
+        $('#password').val($.md5(pwd));
+        return true;
+    }
+block content
+    div(class='container')
+        h2 Please sign in
+        form(role='form' id='loginForm' name='loginForm', action='/doLogin' onsubmit='javascript: return check()')
+            div(class='form-group')
+                label(class='sr-only')
+                input(type='text' class='form-control' id='inputEmail' placeholder='EnterEmail')
+
+            div(class='form-group')
+                label(class='sr-only')
+                input(type='text' class='form-control' id='inputPassword' placeholder='EnterPassword')
+
+            div(class='checkbox')
+                input(type='checkbox' class='form-control' id='inputRememberP' placeholder='EnterPassword')
+                label 记住密码
+
+            div(class='form-group')
+                button(class=['btn', 'btn-primary', 'form-control', 'btn-block'] type='submit') Sign in
+
+//
+   Created by AstaTus on 2015/11/22.
+
