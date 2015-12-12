@@ -1,10 +1,18 @@
 doctype html
-html(lang="zh-CN")
+html(lang='zh-CN')
   head
-    meta(charset="UTF-8")
-    title= title
+    meta(http-equiv='Content-Type' content='text/html' charset='UTF-8')
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width', initial-scale='1')
+    meta(http-equiv='description', content='')
+    meta(http-equiv='author', content='')
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+
+    block head_content
+
+
   body
-    block content
+    block body_content
     script(src='/javascripts/jquery-2.1.4.min.js')
     script(src='/javascripts/bootstrap.min.js')

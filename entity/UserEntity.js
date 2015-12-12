@@ -4,7 +4,7 @@
 
 function userEntity(){
     this.guid = 0;
-    this.name = "";
+    this.account = "";
     this.password = "";
 
 }

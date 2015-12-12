@@ -3,8 +3,9 @@
  */
 
 var userModel = require('../model/UserModel')
-var Promise = require('bluebird')
-var UserService = function(){
+var promise = require('bluebird')
+var log = require('../utils/Log')
+UserService = function(){
 
 }
 
@@ -21,16 +22,25 @@ UserService.createAccount = function(account, password){
 
 UserService.login = function(account, password){
 
-    return Promise.resolve(account).bind(password).then(function(account){
-        return [userModel.findUser(account), password];
-    }).spread(function(user, password){
-        if (user.password === password)
+    return promise.all([getUser(account), getPassword(password)]).spread(checkUser);
+
+    function getUser(account){
+        return userModel.findUser(account);
+    }
+
+    function getPassword(password){
+        return promise.resolve(password);
+    }
+
+    function checkUser(user, password){
+        if(user == null){
+            return false;
+        }
+        else if (user.password === password)
             return true;
         else
             return false;
-    }).bind();
+    }
 }
 
-UserService.verifyAccount(account)
-
-exports = UserService;
+module.exports = UserService;

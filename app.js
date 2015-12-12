@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var login = require('./routes/login');
+var sqlManager = require('./database/SqlManager');
 var app = express();
 
 // view engine setup
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/login', login)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -58,14 +60,8 @@ app.use(function(err, req, res, next) {
 
 
 //mysql
-var mysql=require("mysql");
-var pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '123456',
-  database: 'life_blog',
-  port: 3306,
-});
+sqlManager.init();
+
 
 
 module.exports = app;

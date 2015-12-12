@@ -10,13 +10,13 @@ promise.promisifyAll(mysql);
 promise.promisifyAll(require("mysql/lib/Connection").prototype);
 promise.promisifyAll(require("mysql/lib/Pool").prototype);
 
-
-var SqlManager = function(){
-    this.mPool = null;
+function SqlManager(){
 }
 
-SqlManager.prototype.init = function(){
-    this.mPool = mysql.createPool({
+SqlManager.mPool = null;
+
+SqlManager.init = function(){
+    SqlManager.mPool = mysql.createPool({
         host: config.host,
         user: config.user,
         password: config.password,
@@ -25,13 +25,11 @@ SqlManager.prototype.init = function(){
     });
 }
 
-SqlManager.prototype.excuteSqlAsync = function(sql, options){
+SqlManager.excuteSqlAsync = function(sql, options){
 
-    function query(conn){
-        return conn.queryAsync(sql, options).then(function(){
-            conn.release();
-        });
-    }
-
-   return this.mPool.getConnectionAsync().then(query);
+    var sql = mysql.format(sql, options);
+    console.log(sql);
+    return SqlManager.mPool.queryAsync(sql, options);
 }
+
+module.exports = SqlManager

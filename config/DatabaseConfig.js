@@ -2,11 +2,9 @@
  * Created by AstaTus on 2015/12/6.
  */
 
-var databaseConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: '123456',
-    database: 'life_blog',
-    port: port,
-}
-module.exports = databaseConfig;
+
+exports.host = 'localhost';
+exports.user = 'root';
+exports.password = 'root';
+exports.database = 'life_blog';
+exports.port = 3306;
