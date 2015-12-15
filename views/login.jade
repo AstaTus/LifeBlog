@@ -1,25 +1,9 @@
 extends layout
 
-script(type="text/javascript").
-    function login() {
-        var pwd = $('#inputPassword').val();
-        if (!pwd) {
-            alert('请输入密码');
-            return false;
-        }
-        var userID = $('#inputEmail').val();
-        if (!userID) {
-            alert('请输入邮箱');
-            return false;
-        }
-        $('#fr').val(getQueryString('fr'));
-        $('#password').val($.md5(pwd));
-        return true;
-    }
-
 block head_content
     link(rel='stylesheet', href='/stylesheets/signin.css')
     script(src='/javascripts/ie-emulation-modes-warning.js')
+    script(src='/javascripts/page/login.js')
 
 block body_content
     div(class='container')
@@ -27,7 +11,7 @@ block body_content
             h2(class='form-signin-heading') Please sign in
             label(for='inputEmail' class='sr-only') Email address
             input(type='email' name='email' id='inputEmail' class='form-control' placeholder='Email address' required='' autofocus='')
-
+            p #{error}
             label(for='inputPassword' class='sr-only')
             input(type='password' name='password' class='form-control' id='inputPassword' placeholder='Password' required='')
 
@@ -35,10 +19,21 @@ block body_content
                 label Remember me
                     input(type='checkbox' value='remember-me' id='checkboxRemember')
 
-
             button(class=['btn', 'btn-lg', 'btn-primary', 'btn-block'] type='submit') Sign in
 
     script(src='/javascripts/ie10-viewport-bug-workaround.js')
-//
-   Created by AstaTus on 2015/11/22.
 
+block head_script
+    //script.
+    //    function login(){
+    //        var param = new Param.login();
+    //        param.name = $('#inputEmail').val();
+    //        param.password = $('#inputPassword').val();
+    //        Sender.post('localhost:3000/login', param, result);
+    //    }
+    //
+    //    function result(data) {
+    //
+    //    }
+
+// Created by AstaTus on 2015/11/22.

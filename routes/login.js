@@ -8,21 +8,20 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('login');
+    res.render('login', { error: '' });
 });
 
 router.post('/', function(req, res, next) {
-
     var params = req.body;
-
     userService.login(params.email, params.password).then(checkResult).error(checkErr);
 
     function checkResult(valid){
         if (valid){
-           console.log('login success');
+            req.flash('success', '登入成功');
+            req.session.user = {id:'111', value:'222'};
+            res.redirect('/');
         }else{
-            res.write('<script language="javascript">alert("保存成功！");</script>');
-            console.log('login failed');
+            res.render('login',{ error: '用户名或者密码不存在' });
         }
     }
 

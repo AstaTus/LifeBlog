@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var SessionStore = require('express-mysql-session');
+var flash = require('connect-flash');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -15,6 +18,36 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+//mysql
+sqlManager.init();
+
+//session
+var storeOptions = {
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: 'root',
+  database: 'life_blog',
+  schema: {
+    tableName: 'session',
+    columnNames: {
+      guid: 'custom_session_id',
+      cookie: 'custom_expires_column_name'
+    }
+  }
+};
+
+var sessionStore = new SessionStore(storeOptions);
+app.use(session({
+  key: 'life_blog',
+  secret: 'life_blog_secret',
+  store: sessionStore,
+  resave: true,
+  saveUninitialized: true
+}));
+
+//flash
+app.use(flash());
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -22,6 +55,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+/*app.use(function(req, res, next){
+  console.log("app.usr local");
+  res.locals.user = req.session.user;
+  res.locals.post = req.session.post;
+  var error = req.flash('error');
+  res.locals.error = error.length ? error : null;
+
+  var success = req.flash('success');
+  res.locals.success = success.length ? success : null;
+  next();
+});*/
 
 app.use('/', routes);
 app.use('/users', users);
@@ -57,11 +102,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-
-//mysql
-sqlManager.init();
-
-
 
 module.exports = app;

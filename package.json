@@ -14,6 +14,8 @@
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
     "bluebird": "~3.0.6",
-    "mysql":"~2.9.0"
+    "mysql":"~2.9.0",
+    "express-session":"~1.12.1",
+    "express-session-mysql":"~0.4.2"
   }
 }

@@ -10,9 +10,12 @@ html(lang='zh-CN')
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
 
     block head_content
-
-
+    script(type="text/javascript")
+      script(src='/javascripts/front.js')
+      block head_script
   body
     block body_content
     script(src='/javascripts/jquery-2.1.4.min.js')
     script(src='/javascripts/bootstrap.min.js')
+    script(type="text/javascript")
+    block body_script
